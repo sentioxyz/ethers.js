@@ -864,9 +864,11 @@ export class ParamType {
             "invalid name", "obj.name", name);
 
         let indexed = obj.indexed;
-        if (indexed != null) {
+        if (indexed == true) {
             assertArgument(allowIndexed, "parameter cannot be indexed", "obj.indexed", obj.indexed);
-            indexed = !!indexed;
+            indexed = true;
+        } else {
+            indexed = false
         }
 
         let type = obj.type;
@@ -1045,7 +1047,7 @@ export abstract class NamedFragment extends Fragment {
     }
 }
 
-function joinParams(format: FormatType, params: ReadonlyArray<ParamType>): string { 
+function joinParams(format: FormatType, params: ReadonlyArray<ParamType>): string {
     return "(" + params.map((p) => p.format(format)).join((format === "full") ? ", ": ",") + ")";
 }
 

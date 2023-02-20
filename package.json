@@ -103,7 +103,7 @@
   "license": "MIT",
   "main": "./lib.commonjs/index.js",
   "module": "./lib.esm/index.js",
-  "name": "ethers",
+  "name": "@sentio/ethers",
   "publishConfig": {
     "access": "public",
     "tag": "latest"
@@ -128,7 +128,8 @@
     "test-browser": "node lib.esm/_admin/test-browser",
     "test-commonjs": "mocha --reporter ./reporter.cjs ./lib.commonjs/_tests/test-*.js",
     "test-coverage": "c8 -o output -r lcov -r text mocha --no-color --reporter ./reporter.cjs ./lib.esm/_tests/test-*.js | tee output/summary.txt",
-    "test-esm": "mocha --trace-warnings --reporter ./reporter.cjs ./lib.esm/_tests/test-*.js"
+    "test-esm": "mocha --trace-warnings --reporter ./reporter.cjs ./lib.esm/_tests/test-*.js",
+    "build-pub": "npm run build-all && npm run build-dist && npm publish --ignore-git-checks"
   },
   "sideEffects": false,
   "version": "6.13.1"
