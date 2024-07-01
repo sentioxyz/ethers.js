@@ -971,7 +971,8 @@ export abstract class JsonRpcApiProvider extends AbstractProvider {
      */
     getRpcError(payload: JsonRpcPayload, _error: JsonRpcError): Error {
         const { method } = payload;
-        const { error } = _error;
+        // @ts-expect-error xx
+        const { error, headers } = _error;
 
         if (method === "eth_estimateGas" && error.message) {
             const msg = error.message;
@@ -991,7 +992,7 @@ export abstract class JsonRpcApiProvider extends AbstractProvider {
                 ((<any>payload).params[0]),
                 (result ? result.data: null)
             );
-            e.info = { error, payload };
+            e.info = { error, payload, headers };
             return e;
         }
 
@@ -1246,6 +1247,16 @@ export class JsonRpcProvider extends JsonRpcApiPollingProvider {
 
         let resp = response.bodyJson;
         if (!Array.isArray(resp)) { resp = [ resp ]; }
+        resp.forEach((res: any) => {
+            if ("error" in res) {
+                res.headers = {}
+                for (const [key, value] of Object.entries(response.headers)) {
+                    if (key.toLowerCase().includes('sentio')) {
+                        res.headers[key] = value
+                    }
+                }
+            }
+        })
 
         return resp;
     }
