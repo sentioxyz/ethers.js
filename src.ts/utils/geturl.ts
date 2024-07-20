@@ -63,7 +63,13 @@ export function createGetUrl(options?: Record<string, any>): FetchGetUrlFunc {
             }
 
             request.on("timeout", () => {
-                reject(makeError("request timeout", "TIMEOUT"));
+                let payload
+                if (body) {
+                  try {
+                    payload = JSON.parse(Buffer.from(body).toString('utf8'))
+                  } catch (e) {}
+                }
+                reject(makeError("request timeout", "TIMEOUT", { payload }));
             });
 
             request.once("response", (resp: http.IncomingMessage) => {
@@ -131,4 +137,3 @@ const defaultGetUrl: FetchGetUrlFunc = createGetUrl({ });
 export async function getUrl(req: FetchRequest, signal?: FetchCancelSignal): Promise<GetUrlResponse> {
     return defaultGetUrl(req, signal);
 }
-
