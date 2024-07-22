@@ -330,7 +330,16 @@ function buildWrappedMethod<A extends Array<any> = Array<any>, R = any, D extend
         assert(canCall(runner), "contract runner does not support calling",
             "UNSUPPORTED_OPERATION", { operation: "call" });
 
-        const tx = await populateTransaction(...args);
+        let tx
+        try {
+          tx = await populateTransaction(...args);
+        } catch (e) {
+          const blockNumber = args.at(-1).blockTag
+          if (blockNumber) {
+            (e as any).blockNumber = blockNumber
+          }
+          throw e
+        }
 
         let result = "0x";
         try {
