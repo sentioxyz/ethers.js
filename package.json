@@ -132,5 +132,5 @@
     "build-pub": "npm run build-all && npm run build-dist && npm publish --ignore-git-checks"
   },
   "sideEffects": false,
-  "version": "6.13.1"
+  "version": "6.13.1-patch.2"
 }
