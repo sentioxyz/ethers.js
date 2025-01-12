@@ -559,7 +559,7 @@ export abstract class JsonRpcApiProvider extends AbstractProvider {
                             }
 
                             // The response is an error
-                            if ("error" in resp || resp.result == "0x") {
+                            if ("error" in resp || hexlify(resp.result) == "0x") {
                                 reject(this.getRpcError(payload, resp as any));
                                 continue;
                             }
@@ -1248,7 +1248,7 @@ export class JsonRpcProvider extends JsonRpcApiPollingProvider {
         let resp = response.bodyJson;
         if (!Array.isArray(resp)) { resp = [ resp ]; }
         resp.forEach((res: any) => {
-            if ("error" in res || res.result == "0x") {
+            if ("error" in res || hexlify(res.result) == "0x") {
                 res.headers = {}
                 for (const [key, value] of Object.entries(response.headers)) {
                     if (key.toLowerCase().includes('sentio')) {
