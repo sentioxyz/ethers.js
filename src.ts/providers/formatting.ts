@@ -260,9 +260,14 @@ export interface TransactionReceiptParams {
     blobGasPrice?: null | bigint;
 
     /**
-     *  The actual gas price per gas charged for this transaction.
-     */
+    *  The actual gas price per gas charged for this transaction.
+    */
     effectiveGasPrice?: null | bigint;
+
+    /**
+     *  The fee associated with a transaction on the Layer 1.
+     */
+    l1Fee?: null | bigint;
 
     /**
      *  The [[link-eip-2718]] envelope type.
@@ -408,5 +413,3 @@ export interface TransactionResponseParams {
      */
     blobVersionedHashes?: null | Array<string>;
 };
-
-

@@ -181,6 +181,7 @@ const _formatTransactionReceipt = object({
     cumulativeGasUsed: getBigInt,
     effectiveGasPrice: allowNull(getBigInt),
     blobGasPrice: allowNull(getBigInt, null),
+    l1Fee: allowNull(getBigInt, null),
     status: allowNull(getNumber),
     type: allowNull(getNumber, 0)
 }, {
